@@ -6,12 +6,14 @@ var bg = new Image();
 var fg = new Image();
 var pipeLeft = new Image();
 var pipeRight = new Image();
+var pullia = new Image();
 
 bird.src = "img/bird.png";
 bg.src = "img/bg.png";
 fg.src = "img/fg.png";
 pipeLeft.src = "img/pipeLeft.png";
 pipeRight.src = "img/pipeRight.png";
+pullia.src = "img/pullia.png";
 
 // Звуки-пуки
 var fly = new Audio();
@@ -20,7 +22,7 @@ var score_audio = new Audio();
 fly.src = "audio/fly.mp3";
 score_audio.src = "audio/score.mp3";
 
-var gap = 100;
+var gap = 225;
 
 // Кнопка фор птичка
 document.addEventListener("keydown", moveRect);
@@ -46,7 +48,12 @@ function moveRect(e){
             fly.play();
             break;
         case 38:   // если нажата клавиша вверх
-            yPos -= 25;
+            if (yPos < 25) {
+              yPos = 0;
+            } else {
+              yPos -= 25;
+            }
+
             fly.play();
             break;
         case 39:   // если нажата клавиша вправо
@@ -58,7 +65,12 @@ function moveRect(e){
            fly.play();
             break;
         case 40:   // если нажата клавиша вниз
-            yPos += 25;
+            if (yPos > 900) {
+              yPos = 910;
+            } else {
+              yPos +=25
+              }
+
             fly.play();
             break;
     }
@@ -73,6 +85,14 @@ pipe[0] = {
   y : 0
 }
 
+//var bu = []
+
+bu[0] = {
+  x : 0,
+  y : 0
+}
+
+
 var score = 0;
 
 // Попа птички
@@ -84,43 +104,56 @@ var yPos = 850;
 function draw() {
   ctx.drawImage(bg, 0, 0);
 
-  for(var i = 0; i < pipe.length; i++) {
+  //for(var i = 0; i < pipe.length; i++)
+
+  var i = 0;
+  while (i < pipe.length)
+  {
     ctx.drawImage(pipeLeft, pipe[i].x, pipe[i].y);
-    //ctx.drawImage(pipeRight, pipe[i].x, pipe[i].y + pipeUp.height + gap);
+    ctx.drawImage(pipeRight, pipe[i].x + pipeLeft.width + gap, pipe[i].y);
+
+    ctx.drawImage(pullia, 20, 30);
 
     pipe[i].y++;
 
-    if(pipe[i].y == 400) {
+    if(pipe[i].y == 450) {
       pipe.push({
-        x : 0,
-        y : 0
-      //  y : Math.floor(Math.random() * pipeUp.height) - pipeUp.height
+        x : Math.floor(Math.random() * pipeLeft.width) - pipeLeft.width,
+        y : 0,
       });
     }
 
-  //  if(xPos + bird.width >= pipe[i].x
-  //    && xPos <= pipe[i].x + pipeUp.width
-  //    && (yPos <= pipe[i].y + pipeUp.height
-  //      || yPos + bird.height >= pipe[i].y + pipeUp.height + gap) || yPos + bird.height >= cvs.height - fg.height  ) {
-  //        location.reload(); // Перезагрузка страницы
-  //      }
-
-    if(pipe[i].x == 5) {
-      score++;
-      score_audio.play();
+   if(yPos <= pipe[i].y + pipeLeft.height
+      && yPos + bird.height >= pipe[i].y
+      && !(xPos > pipe[i].x + pipeLeft.width
+      && xPos + bird.width < pipe[i].x + pipeLeft.width + gap)) {
+          location.reload(); // Пере
     }
-  }
 
-  //ctx.drawImage(fg, 0, cvs.height - fg.height);
-  ctx.drawImage(bird, xPos, yPos);
-
-  //yPos += grav;
-
+  //  if(xPos + bird.width >= pipe[i].x
+    //  && xPos <= pipe[i].x  + pipeUp.width
+      //&& (yPos <= pipe[i].y + pipeUp.height
+        //|| yPos + bird.height >= pipe[i].y + pipeUp.height + gap) || yPos + bird.height >= cvs.height - fg.height  ) {
+          //location.reload(); // Перезагрузка страницы
+  //}
+//  {
+//      {
+//   if(pipe[i].y == 1024) {
+//      score++;
+//      score_audio.play();
+//    }
+//    i += 1;
+//  }
+//
+//  ctx.drawImage(fg, 0, cvs.height - fg.height);
+//  ctx.drawImage(bird, xPos, yPos);
+//
+//  yPos += grav;
+//      {
 //  ctx.fillStyle = "#008000";
 //  ctx.font = "50px Verdana";
-//  ctx.fillText("Счёт: " + score, 10, 470);
-
-  requestAnimationFrame(draw);
-
-}
+//
+//  requestAnimationFrame(draw);
+//}
+//      }
 pipeLeft.onload = draw;
