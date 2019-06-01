@@ -6,12 +6,14 @@ var bg = new Image();
 var fg = new Image();
 var pipeLeft = new Image();
 var pipeRight = new Image();
+var bu = new Image();
 
 bird.src = "img/bird.png";
 bg.src = "img/bg.png";
 fg.src = "img/fg.png";
 pipeLeft.src = "img/pipeLeft.png";
 pipeRight.src = "img/pipeRight.png";
+bu.src = "img/bu.png";
 
 // Звуки-пуки
 var fly = new Audio();
@@ -20,7 +22,7 @@ var score_audio = new Audio();
 fly.src = "audio/fly.mp3";
 score_audio.src = "audio/score.mp3";
 
-var gap = 175;
+var gap = 225;
 
 // Кнопка фор птичка
 document.addEventListener("keydown", moveRect);
@@ -83,6 +85,13 @@ pipe[0] = {
   y : 0
 }
 
+//var bug = [];
+
+//bug[0] = {
+//  x : 0,
+//  y : 0
+//}
+
 var score = 0;
 
 // Попа птички
@@ -102,14 +111,26 @@ function draw() {
     ctx.drawImage(pipeLeft, pipe[i].x, pipe[i].y);
     ctx.drawImage(pipeRight, pipe[i].x + pipeLeft.width + gap, pipe[i].y);
 
+    //ctx.drawImage(bu, bug[i].x, bug[i].y);
+
     pipe[i].y++;
 
-    if(pipe[i].y == 300) {
+    //bug[i].y++;
+
+    if(pipe[i].y == 450) {
       pipe.push({
         x : Math.floor(Math.random() * pipeLeft.width) - pipeLeft.width,
         y : 0,
       });
     }
+
+    //if(bug[i].y ==450){
+      //bug.push({
+    //    x : xPos,
+  //      y : yPos,
+//
+    //  });
+  //  }
 
    if(yPos <= pipe[i].y + pipeLeft.height
       && yPos + bird.height >= pipe[i].y
