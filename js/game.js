@@ -6,14 +6,14 @@ var bg = new Image();
 var fg = new Image();
 var pipeLeft = new Image();
 var pipeRight = new Image();
-var pullia = new Image();
+var bu = new Image();
 
 bird.src = "img/bird.png";
 bg.src = "img/bg.png";
 fg.src = "img/fg.png";
 pipeLeft.src = "img/pipeLeft.png";
 pipeRight.src = "img/pipeRight.png";
-pullia.src = "img/pullia.png";
+bu.src = "img/bu.png";
 
 // Звуки-пуки
 var fly = new Audio();
@@ -85,13 +85,12 @@ pipe[0] = {
   y : 0
 }
 
-//var bu = []
+//var bug = [];
 
-bu[0] = {
-  x : 0,
-  y : 0
-}
-
+//bug[0] = {
+//  x : 0,
+//  y : 0
+//}
 
 var score = 0;
 
@@ -112,9 +111,11 @@ function draw() {
     ctx.drawImage(pipeLeft, pipe[i].x, pipe[i].y);
     ctx.drawImage(pipeRight, pipe[i].x + pipeLeft.width + gap, pipe[i].y);
 
-    ctx.drawImage(pullia, 20, 30);
+    //ctx.drawImage(bu, bug[i].x, bug[i].y);
 
     pipe[i].y++;
+
+    //bug[i].y++;
 
     if(pipe[i].y == 450) {
       pipe.push({
@@ -122,6 +123,14 @@ function draw() {
         y : 0,
       });
     }
+
+    //if(bug[i].y ==450){
+      //bug.push({
+    //    x : xPos,
+  //      y : yPos,
+//
+    //  });
+  //  }
 
    if(yPos <= pipe[i].y + pipeLeft.height
       && yPos + bird.height >= pipe[i].y
@@ -135,25 +144,25 @@ function draw() {
       //&& (yPos <= pipe[i].y + pipeUp.height
         //|| yPos + bird.height >= pipe[i].y + pipeUp.height + gap) || yPos + bird.height >= cvs.height - fg.height  ) {
           //location.reload(); // Перезагрузка страницы
-  //}
-//  {
-//      {
-//   if(pipe[i].y == 1024) {
-//      score++;
-//      score_audio.play();
-//    }
-//    i += 1;
-//  }
-//
-//  ctx.drawImage(fg, 0, cvs.height - fg.height);
-//  ctx.drawImage(bird, xPos, yPos);
-//
-//  yPos += grav;
-//      {
+      //}
+
+   if(pipe[i].x == 5) {
+      score++;
+      score_audio.play();
+    }
+    i += 1;
+  }
+
+  //ctx.drawImage(fg, 0, cvs.height - fg.height);
+  ctx.drawImage(bird, xPos, yPos);
+
+  //yPos += grav;
+
 //  ctx.fillStyle = "#008000";
 //  ctx.font = "50px Verdana";
-//
-//  requestAnimationFrame(draw);
-//}
-//      }
+//  ctx.fillText("Счёт: " + score, 10, 470);
+
+  requestAnimationFrame(draw);
+
+}
 pipeLeft.onload = draw;
